@@ -15,3 +15,25 @@ func canMakeArithmeticProgression(arr []int) bool {
 	}
 	return true
 }
+
+func canMakeArithmeticProgression_2(arr []int) bool {
+	// https://en.wikipedia.org/wiki/Arithmetic_progression
+	min_val, max_val, n := 1000000, -1000000, len(arr)
+	hashset := make(map[int]bool)
+	for _, num := range arr {
+		if min_val > num {
+			min_val = num
+		}
+		if max_val < num {
+			max_val = num
+		}
+		hashset[num] = true
+	}
+	delta := (max_val - min_val) / (n - 1)
+	for i, cur := 0, min_val; i < n; i, cur = i+1, cur+delta {
+		if _, ok := hashset[cur]; !ok {
+			return false
+		}
+	}
+	return true
+}
